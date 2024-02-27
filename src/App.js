@@ -1,16 +1,27 @@
-import { Fragment } from "react";
+import { useState } from "react";
 import Header from "./components/Layout/Header";
 import Meals from "./components/Meals/Meals";
-
+import Cart from "./components/Cart/Cart";
+import CartProvider from "./cotext/CartProvider";
 
 function App() {
+  const [cartIsShown, setCartIsShown] = useState(false);
+
+  const showCarthandler = () => {
+    setCartIsShown(true);
+  };
+
+  const hideCartHandler = () => {
+    setCartIsShown(false);
+  };
   return (
-    <Fragment>
-      <Header />
+    <CartProvider>
+      {cartIsShown && <Cart onClose={hideCartHandler} />}
+      <Header onShowCart={showCarthandler} />
       <main>
-        <Meals/>
+        <Meals />
       </main>
-    </Fragment>
+    </CartProvider>
   );
 }
 
